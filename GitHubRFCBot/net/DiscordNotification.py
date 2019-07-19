@@ -25,7 +25,7 @@ class DiscordNotification:
     ):
         logger.debug(f'Notifying with the following topic: {topic}')
 
-        logger.debug(f'Got the following status: {status}')
+        embed = None
 
         if status == 1:
             embed_description = DiscordNotification.get_opened_description(
@@ -34,13 +34,9 @@ class DiscordNotification:
             embed = DiscordEmbed(
                 title='A new RFC is available',
                 description=embed_description,
-                color=5020550
+                color=3329330
             )
-            embed.set_author(
-                name=author,
-                url=topic_url,
-                icon_url=author_profile_picture_url
-            )
+
         elif status == 2:
             embed_description = DiscordNotification.get_closed_description(
                 topic)
@@ -48,13 +44,9 @@ class DiscordNotification:
             embed = DiscordEmbed(
                 title='A RFC was closed',
                 description=embed_description,
-                color=24566102
+                color=16711680
             )
-            embed.set_author(
-                name=author,
-                url=topic_url,
-                icon_url=author_profile_picture_url
-            )
+
         else:
             embed_description = DiscordNotification.get_reopened_description(
                 topic)
@@ -62,13 +54,16 @@ class DiscordNotification:
             embed = DiscordEmbed(
                 title='A RFC was reopened',
                 description=embed_description,
-                color=2552470
+                color=16187136
             )
-            embed.set_author(
-                name=author,
-                url=topic_url,
-                icon_url=author_profile_picture_url
-            )
+
+        embed.set_author(
+            name=author,
+            url=topic_url,
+            icon_url=author_profile_picture_url
+        )
+
+        logger.debug(embed)
 
         self.discord_webhook.add_embed(embed)
         self.discord_webhook.execute()
