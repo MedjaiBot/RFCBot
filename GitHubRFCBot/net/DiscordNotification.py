@@ -25,6 +25,8 @@ class DiscordNotification:
     ):
         logger.debug(f'Notifying with the following topic: {topic}')
 
+        logger.debug(f'Got the following status: {status}')
+
         if status == 1:
             embed_description = DiscordNotification.get_opened_description(
                 topic)
