@@ -27,7 +27,7 @@ class Webserver(BaseHTTPRequestHandler):
         action = parsed_body['action']
 
         # Check if the issue was created or not
-        if action != 'opened' or action != 'closed' or action != 'reopened':
+        if action != 'opened' and action != 'closed' and action != 'reopened':
             logger.debug(f'Unknown action: {action}')
 
             self.send_response(204)
