@@ -16,7 +16,7 @@ class Webserver(BaseHTTPRequestHandler):
         action = parsed_body['action']
 
         # Check if the issue was created or not
-        if action != 'created':
+        if action != 'opened':
             self.send_response(204)
             self.end_headers()
             return
