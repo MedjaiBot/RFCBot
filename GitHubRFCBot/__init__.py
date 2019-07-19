@@ -4,7 +4,7 @@ from http.server import ThreadingHTTPServer
 
 from dotenv import load_dotenv
 from GitHubRFCBot.logger import logger
-from GitHubRFCBot.io import Webserver
+from GitHubRFCBot.net import Webserver
 
 
 class GitHubRFCBot:
