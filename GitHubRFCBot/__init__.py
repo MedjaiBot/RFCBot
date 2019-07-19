@@ -1,6 +1,6 @@
 import os
 from sys import exit
-from http.server import ThreadingHTTPServer
+from http.server import HTTPServer
 
 from dotenv import load_dotenv
 from GitHubRFCBot.logger import logger
@@ -30,7 +30,7 @@ class GitHubRFCBot:
         webserver = None
 
         try:
-            webserver = ThreadingHTTPServer(
+            webserver = HTTPServer(
                 (interface, port), Webserver.Webserver
             )
             webserver.serve_forever()
