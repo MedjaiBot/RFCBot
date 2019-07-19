@@ -26,7 +26,9 @@ class GitHubRFCBot:
         webserver = None
 
         try:
-            webserver = ThreadingHTTPServer((interface, port), Webserver.Webserver)
+            webserver = ThreadingHTTPServer(
+                (interface, port), Webserver.Webserver
+            )
             webserver.serve_forever()
         except OSError as exception:
             logger.error(
