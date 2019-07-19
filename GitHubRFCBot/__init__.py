@@ -18,15 +18,15 @@ class GitHubRFCBot:
         self.run_webserver()
 
     def run_webserver(self):
-        host = os.environ['HTTP_HOSTNAME']
+        interface = os.environ['HTTP_INTERFACE']
         port = int(os.environ['HTTP_PORT'])
 
-        logger.info(f'Going to listen on {host}:{port}')
+        logger.info(f'Going to listen on {interface}:{port}')
 
         webserver = None
 
         try:
-            webserver = ThreadingHTTPServer((host, port), Webserver.Webserver)
+            webserver = ThreadingHTTPServer((interface, port), Webserver.Webserver)
             webserver.serve_forever()
         except OSError as exception:
             logger.error(
