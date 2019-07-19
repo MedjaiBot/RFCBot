@@ -20,36 +20,77 @@ class DiscordNotification:
         topic: str,
         topic_url: str,
         author: str,
-        author_profile_picture_url: str
+        author_profile_picture_url: str,
+        status: int
     ):
         logger.debug(f'Notifying with the following topic: {topic}')
 
-        embed_description = DiscordNotification.get_embed_description(topic)
+        if status == 1:
+            embed_description = DiscordNotification.get_opened_description(
+                topic)
 
-        embed = DiscordEmbed(
-            title='A new RFC is available',
-            description=embed_description,
-            color=5020550
-        )
-        embed.set_author(
-            name=author,
-            url=topic_url,
-            icon_url=author_profile_picture_url
-        )
+            embed = DiscordEmbed(
+                title='A new RFC is available',
+                description=embed_description,
+                color=5020550
+            )
+            embed.set_author(
+                name=author,
+                url=topic_url,
+                icon_url=author_profile_picture_url
+            )
+        elif status == 2:
+            embed_description = DiscordNotification.get_closed_description(
+                topic)
 
-        logger.debug(embed)
-        logger.debug(embed.author)
-        logger.debug(embed.title)
-        logger.debug(embed.description)
-        logger.debug(embed.color)
+            embed = DiscordEmbed(
+                title='A RFC was closed',
+                description=embed_description,
+                color=24566102
+            )
+            embed.set_author(
+                name=author,
+                url=topic_url,
+                icon_url=author_profile_picture_url
+            )
+        else:
+            embed_description = DiscordNotification.get_reopened_description(
+                topic)
+
+            embed = DiscordEmbed(
+                title='A RFC was reopened',
+                description=embed_description,
+                color=2552470
+            )
+            embed.set_author(
+                name=author,
+                url=topic_url,
+                icon_url=author_profile_picture_url
+            )
 
         self.discord_webhook.add_embed(embed)
         self.discord_webhook.execute()
 
     @staticmethod
-    def get_embed_description(topic: str):
+    def get_opened_description(topic: str):
         return '\n'.join([
             f'The RFC "{topic}" is now available for comments.',
+            '',
+            'If you would like to participate create an account on Github or discuss it in this channel.'
+        ])
+
+    @staticmethod
+    def get_closed_description(topic: str):
+        return '\n'.join([
+            f'The RFC "{topic}" was closed.',
+            '',
+            'If you would like to say anything that is related to that topic, feel free to mention a maintainer that he reopens the discussion.'
+        ])
+
+    @staticmethod
+    def get_reopened_description(topic: str):
+        return '\n'.join([
+            f'The RFC "{topic}" was reopened.',
             '',
             'If you would like to participate create an account on Github or discuss it in this channel.'
         ])

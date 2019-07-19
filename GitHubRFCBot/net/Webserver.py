@@ -16,10 +16,17 @@ class Webserver(BaseHTTPRequestHandler):
         action = parsed_body['action']
 
         # Check if the issue was created or not
-        if action != 'opened':
+        if action != 'opened' or action != 'closed' or action != 'reopened':
             self.send_response(204)
             self.end_headers()
             return
+
+        if action == 'opened':
+            status = 1
+        elif action == 'closed':
+            status = 2
+        else:
+            status = 3
 
         # Get the title of the issue
         issue_title = str(parsed_body['issue']['title'])
@@ -44,7 +51,8 @@ class Webserver(BaseHTTPRequestHandler):
             str(extracted_title),
             topic_url,
             author,
-            profile_picture
+            profile_picture,
+            status
         )
 
         self.send_response(204)
