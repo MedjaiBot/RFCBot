@@ -28,6 +28,8 @@ class Webserver(BaseHTTPRequestHandler):
 
         # Check if the issue was created or not
         if action != 'opened' or action != 'closed' or action != 'reopened':
+            logger.debug(f'Unknown action: {action}')
+
             self.send_response(204)
             self.end_headers()
             return
@@ -44,6 +46,8 @@ class Webserver(BaseHTTPRequestHandler):
 
         # Check if the title of the issue starts with "RFC:"
         if not issue_title.startswith('RFC:'):
+            logger.debug(f'Issue does not starts with the RFC prefix')
+
             self.send_response(204)
             self.end_headers()
             return
