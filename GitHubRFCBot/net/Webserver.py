@@ -13,6 +13,17 @@ class Webserver(BaseHTTPRequestHandler):
         body = self.rfile.read(content_length)
         parsed_body = loads(body)
 
+        logger.debug(f'Content-Length: {content_length}')
+        logger.debug(parsed_body)
+
+        if 'action' in parsed_body:
+            logger.debug('JSON contains action key')
+        else:
+            logger.error('Action is not in the JSON')
+            self.send_response(204)
+            self.end_headers()
+            return
+
         action = parsed_body['action']
 
         # Check if the issue was created or not
