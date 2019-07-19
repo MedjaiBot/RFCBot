@@ -19,7 +19,11 @@ class GitHubRFCBot:
 
     def run_webserver(self):
         interface = os.environ['HTTP_INTERFACE']
-        port = int(os.environ['HTTP_PORT'])
+
+        if 'PORT' in os.environ:
+            port = int(os.environ['PORT'])
+        else:
+            port = int(os.environ['HTTP_PORT'])
 
         logger.info(f'Going to listen on {interface}:{port}')
 
