@@ -1,8 +1,9 @@
 import os
-from sys import exit
 from http.server import HTTPServer
+from sys import exit
 
 from dotenv import load_dotenv
+
 from GitHubRFCBot.logger import logger
 from GitHubRFCBot.net import Webserver
 
@@ -18,7 +19,10 @@ class GitHubRFCBot:
         self.run_webserver()
 
     def run_webserver(self):
-        interface = os.environ['HTTP_INTERFACE']
+        if 'HTTP_INTERFACE' in os.environ:
+            interface = os.environ['HTTP_INTERFACE']
+        else:
+            interface = '0.0.0.0'
 
         if 'PORT' in os.environ:
             port = int(os.environ['PORT'])
