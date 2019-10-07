@@ -1,5 +1,4 @@
 from http.server import BaseHTTPRequestHandler
-from io import BytesIO
 from json import loads
 
 from GitHubRFCBot.logger import logger
