@@ -6,5 +6,5 @@ idna==2.8
 loguru==0.5.3
 pycodestyle==2.5.0
 python-dotenv==0.10.5
-requests==2.31.0
+requests==2.32.0
 urllib3==1.26.18
